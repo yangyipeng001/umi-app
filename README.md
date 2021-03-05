@@ -5,11 +5,16 @@
 Install dependencies,
 
 ```bash
-$ yarn
+# 安装 tyarn
+$ npm i yarn tyarn -g
+```
+
+```bash
+$ yarn 或 tyarn
 ```
 
 Start the dev server,
 
 ```bash
-$ yarn start
+$ yarn start 或 tyarn start
 ```
