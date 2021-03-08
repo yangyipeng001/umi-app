@@ -12,38 +12,66 @@ const config = {
   },
   publicPath: '/',
 
-  // plugins: [
-  //   // ref: https://umijs.org/plugin/umi-plugin-react.html
-  //   [
-  //     'umi-plugin-react',
-  //     {
-  //       antd: true,
-  //       dva: {
-  //         hmr: true,
-  //         immer: true,
-  //       },
-  //       dynamicImport: { webpackChunkName: true },
-  //       title: 'my-study',
-  //       dll: true,
-  //       routes: {
-  //         exclude: [
-  //           /models\//,
-  //           /services\//,
-  //           /model\.(t|j)sx?$/,
-  //           /service\.(t|j)sx?$/,
-  //           /components\//
-  //         ]
-  //       },
-  //     },
-  //   ],
-  // ],
-  antd: {},
+  antd: {
+    // dark: true,
+  },
+  // layout:{
+  //   name: 'Ant Design',
+  // },
   dva: {},
+
+  /**
+   * tsx 暂时通过
+   * 变量的方式引入（import s from './index.scss'）
+   * @TODO: 通过modules的方式引入，暂时不生效（import './index.scss'）
+   */
+  sass: {},
+
+  // 样式配置
+  cssLoader: {
+    // 这里的 modules 可以接受 getLocalIdent
+    modules: {
+      getLocalIdent: (
+        context: {
+          resourcePath: string;
+        },
+        _: string,
+        localName: string,
+      ) => {
+        if (
+          context.resourcePath.includes('node_modules') ||
+          // context.resourcePath.includes('ant.design.pro.less') ||
+          context.resourcePath.includes('global.scss')
+        ) {
+          return localName;
+        }
+
+        // const match = context.resourcePath.match(/src(.*)/);
+        // if (match && match[1]) {
+        //   const antdProPath = match[1].replace('.less', '');
+        //   const arr = winPath(antdProPath)
+        //     .split('/')
+        //     .map((a: string) => a.replace(/([A-Z])/g, '-$1'))
+        //     .map((a: string) => a.toLowerCase());
+        //   return `antd-pro${arr.join('-')}-${localName}`.replace(/--/g, '-');
+        // }
+        // return localName;
+      },
+    },
+  },
 
   routes: [
     {
       path: '/',
       component: `${__dirname}/src/layouts`,
+      menu: {
+        name: '欢迎',
+        icon: 'github',
+      },
+      // layout:{
+      //   // hideNav: true,
+      // },
+      // access: 'canRead',
     },
   ],
 };
