@@ -1,24 +1,58 @@
 /**
  * layout
  */
-import React from 'react-dom';
+import React from 'react';
+// import React from 'react-dom';
 import { Layout, Menu, Breadcrumb } from 'antd';
+import { history } from 'umi';
+
 import {
   UserOutlined,
   LaptopOutlined,
   NotificationOutlined,
 } from '@ant-design/icons';
-import MaskCss from '@/pages/mask';
+
+import { getRoutes } from './route';
 
 const { SubMenu } = Menu;
 const { Header, Content, Sider } = Layout;
 
-const RenderLayout = () => {
+const RenderLayout = (props: any) => {
+  const pathList = history.location.pathname.split('/');
+
+  const clickRouteFun = (e: any) => {
+    const { keyPath } = e;
+    const path = `/${keyPath[1]}/${keyPath[0]}`;
+
+    history.push(path);
+  };
+
+  // 侧边栏
+  const renderMenu = () => {
+    const renderItem = (list: any) => {
+      if (Array.isArray(list) && list.length) {
+        return (list || []).map((item: any) => {
+          return <Menu.Item key={item.name}>{item.name}</Menu.Item>;
+        });
+      }
+
+      return null;
+    };
+
+    return (getRoutes()[0].routes || []).map((item: any) => {
+      return (
+        <SubMenu key={item.name} icon={<item.icon />} title={item.name}>
+          {renderItem(item.routes)}
+        </SubMenu>
+      );
+    });
+  };
+
   return (
     <Layout>
       {/* 头部 */}
       <Header className="header">
-        <div className="logo" />
+        <div className="logo">个人学习</div>
 
         {/* 头部菜单 */}
         {/* <Menu theme="dark" mode="horizontal" defaultSelectedKeys={['2']}>
@@ -33,35 +67,13 @@ const RenderLayout = () => {
         <Sider width={200} className="site-layout-background">
           <Menu
             mode="inline"
-            defaultSelectedKeys={['mask']}
-            defaultOpenKeys={['css']}
+            defaultSelectedKeys={[pathList[2]]}
+            defaultOpenKeys={[pathList[1]]}
             style={{ height: '100%', borderRight: 0 }}
             theme={'dark'}
+            onClick={clickRouteFun}
           >
-            <SubMenu key="css" icon={<UserOutlined />} title="css">
-              <Menu.Item key="mask">mask</Menu.Item>
-              <Menu.Item key="2">option2</Menu.Item>
-              <Menu.Item key="3">option3</Menu.Item>
-              <Menu.Item key="4">option4</Menu.Item>
-            </SubMenu>
-
-            <SubMenu key="js" icon={<LaptopOutlined />} title="js">
-              <Menu.Item key="5">option5</Menu.Item>
-              <Menu.Item key="6">option6</Menu.Item>
-              <Menu.Item key="7">option7</Menu.Item>
-              <Menu.Item key="8">option8</Menu.Item>
-            </SubMenu>
-
-            <SubMenu
-              key="others"
-              icon={<NotificationOutlined />}
-              title="others"
-            >
-              <Menu.Item key="9">option9</Menu.Item>
-              <Menu.Item key="10">option10</Menu.Item>
-              <Menu.Item key="11">option11</Menu.Item>
-              <Menu.Item key="12">option12</Menu.Item>
-            </SubMenu>
+            {renderMenu()}
           </Menu>
         </Sider>
 
@@ -82,7 +94,7 @@ const RenderLayout = () => {
               minHeight: 280,
             }}
           >
-            <MaskCss />
+            {props.children}
           </Content>
         </Layout>
       </Layout>

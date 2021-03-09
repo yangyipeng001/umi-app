@@ -1,4 +1,5 @@
 // import {IConfig} from 'umi-types';
+import { getRoutes } from './src/layouts/route';
 
 // https://umijs.org/config/
 
@@ -60,20 +61,7 @@ const config = {
     },
   },
 
-  routes: [
-    {
-      path: '/',
-      component: `${__dirname}/src/layouts`,
-      menu: {
-        name: '欢迎',
-        icon: 'github',
-      },
-      // layout:{
-      //   // hideNav: true,
-      // },
-      // access: 'canRead',
-    },
-  ],
+  routes: getRoutes(`${__dirname}`),
 };
 
 export default config;

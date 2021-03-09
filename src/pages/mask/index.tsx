@@ -40,9 +40,13 @@ const MaskCss = () => {
 
   return (
     <div className={s.maskWrap}>
-      <div className={s.gYasuo}></div>
+      <div className={s.title}>模仿视频弹幕</div>
 
-      <div className={s.gBarrageContainer}>{renderChild()}</div>
+      <div className={s.content}>
+        <div className={s.gYasuo}></div>
+
+        <div className={s.gBarrageContainer}>{renderChild()}</div>
+      </div>
     </div>
   );
 };
