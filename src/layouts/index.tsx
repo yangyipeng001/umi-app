@@ -12,7 +12,7 @@ import {
   NotificationOutlined,
 } from '@ant-design/icons';
 
-import { getRoutes } from './route';
+import { getRoutes } from '../../config/route';
 
 const { SubMenu } = Menu;
 const { Header, Content, Sider } = Layout;

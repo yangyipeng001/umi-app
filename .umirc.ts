@@ -1,5 +1,5 @@
 // import {IConfig} from 'umi-types';
-import { getRoutes } from './src/layouts/route';
+import { getRoutes } from './config/route';
 
 // https://umijs.org/config/
 
@@ -12,6 +12,16 @@ const config = {
     ie: 9,
   },
   publicPath: '/',
+
+  // 代理配置
+  // proxy: {
+  //   '': {
+  //     target: '',
+
+  //     // true 允许跨域
+  //     changeOrigin: true,
+  //   }
+  // },
 
   antd: {
     // dark: true,
@@ -61,6 +71,7 @@ const config = {
     },
   },
 
+  // 路由
   routes: getRoutes(`${__dirname}`),
 };
 
